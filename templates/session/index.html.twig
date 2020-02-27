@@ -63,7 +63,7 @@
                 </td>
                 <td>
                     <a class="action" href="{{ path('edit_session', {'id':session.id}) }}">&expectation;</a>
-                    <a class="action" href="{{ path('remove_one_session', {'id':session.id}) }}">&xotime;</a>
+                    <a class="action suprr" href="{{ path('remove_one_session', {'id':session.id}) }}">&xotime;</a>
                 </td>
 
             </tr>
@@ -75,4 +75,33 @@
     <br>
     <a class="submit" href="{{ path('form_session') }}">Ajouter une session</a>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $( document ).ready(function(){
+            $('.suprr').on('click', function(e){
+                if(!confirm('Certain ?')){
+                    e.preventDefault
+                }
+            })
+
+            $.get(
+                "{{ path('ajaxconfirm') }}",
+                {
+                    'slug': $('this').data("session")
+                }
+            ),
+            function(data){
+
+                
+            }
+
+
+    })
+
+</script>
+
+
 {% endblock %}
