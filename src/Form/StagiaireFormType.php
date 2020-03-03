@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Stagiaire;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,7 +32,18 @@ class StagiaireFormType extends AbstractType
                 'years' => range(date('Y'), date('Y')-102),
                 
             ])
-            ->add('ville')
+
+            ->add('codepostal', TextType::class, [
+                'label' => 'Code postal*',
+                'attr' => ['placeholder' => 'Code postal']
+            ])
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                [$this, 'onPreSubmit']
+            )
+            ->add('ville', ChoiceType::class, [
+                'placeholder' => 'Choisissez une ville'
+            ])
 
             
             ->add('mail', EmailType::class, [
@@ -61,5 +74,12 @@ class StagiaireFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Stagiaire::class,
         ]);
+    }
+    public function onPreSubmit(FormEvent $event)
+    {
+        $input = $event->getData()['ville'];
+        $event->getForm()->add('ville', ChoiceType::class,
+            ['choices' => [$input]]
+    );
     }
 }

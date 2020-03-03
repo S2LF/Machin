@@ -41,6 +41,11 @@ class Stagiaire
     private $ville;
 
     /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $codepostal;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $mail;
@@ -181,6 +186,18 @@ class Stagiaire
         if ($this->sessions->contains($session)) {
             $this->sessions->removeElement($session);
         }
+
+        return $this;
+    }
+
+    public function getCodepostal(): ?string
+    {
+        return $this->codepostal;
+    }
+
+    public function setCodepostal(string $codepostal): self
+    {
+        $this->codepostal = $codepostal;
 
         return $this;
     }
