@@ -13,6 +13,7 @@ use App\Form\AjoutStagiaireFormType;
 use App\Repository\StagiaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -233,6 +234,23 @@ class SessionController extends AbstractController
 
          return $this->render('session/showOne.html.twig', [
              'session' => $session ]);
+
+     }
+
+    /**
+     * @Route("/valid/ajax", name="ajax_validation", methods={"GET"})
+     */
+     public function ajax_validation(Request $request, EntityManagerInterface $em){
+
+        $sessid = $request->query->get("sessid");
+
+        $session = $em->getRepository(Session::class)->findOneBy(['id' => $sessid]);
+
+        $html = $this->renderView("session/ajax.html.twig", [
+            "session" => $session
+        ]);
+
+        return new Response($html);
 
      }
 

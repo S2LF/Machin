@@ -33,6 +33,7 @@
         </thead>
         <tbody>
             {% for session in sessions %}
+
             <tr>
                 <td class="bold">
                     <h3>
@@ -53,17 +54,22 @@
                 <td>
                     {{ session.stagiaires|length}}
                 </td>
-                <td>
-                    {% if (session.nbPlaces) - (session.stagiaires|length) > 0 %}
-                        <span style="color:green;">{{ (session.nbPlaces) - (session.stagiaires|length)}}</span>
-                    {% else %}
-                        <span style="color:red;">0</span>
-                    {% endif %}
-                    
+                {% if (session.nbPlaces) - (session.stagiaires|length) > 0 %}
+                <td class="tdColorG">
+                        <span >{{ (session.nbPlaces) - (session.stagiaires|length)}}</span>
                 </td>
+                    {% else %}
+                <td class="tdColorR">
+                        <span>0</span>
+                </td>
+                    {% endif %}
+                                   
                 <td>
                     <a class="action" href="{{ path('edit_session', {'id':session.id}) }}">&expectation;</a>
-                    <a class="action suprr" href="{{ path('remove_one_session', {'id':session.id}) }}">&xotime;</a>
+                    <a class="action supr" href="{{ path('remove_one_session', {'id':session.id}) }}">&xotime;</a>
+                   
+                    
+                    <button class="myBtn" data-session="{{ session.id }}">Open Modal</button>
                 </td>
 
             </tr>
@@ -78,30 +84,33 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script>
-    $( document ).ready(function(){
-            $('.suprr').on('click', function(e){
+    {{ parent() }}
+    <script>
+        $( document ).ready(function(){
+            $('.supr').on('click', function(e){
                 if(!confirm('Certain ?')){
-                    e.preventDefault
+                    e.preventDefault()
                 }
             })
+                  
+            // Get the button that opens the modal
+            let buttons = $(".myBtn")
 
-            $.get(
-                "{{ path('ajaxconfirm') }}",
-                {
-                    'slug': $('this').data("session")
-                }
-            ),
-            function(data){
-
+            $(".myBtn").on("click", function(){
                 
-            }
-
-
-    })
-
-</script>
-
+                let sessid = $(this).data("session")
+                $.get(
+                    "{{ path('ajax_validation') }}",
+                    {
+                        "sessid" : sessid
+                    },
+                    function(data){
+                        $("#myModal .modal-body").html(data)
+                    }
+                )
+            })
+        })
+        
+    </script>
 
 {% endblock %}

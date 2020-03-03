@@ -1,0 +1,31 @@
+<h1>Détail de la session {{ session.intitule }}</h1>
+<div>
+
+    <h3>Modules de la session</h3>
+    <table>
+        <thead>
+            <th>Module</th>
+            <th>Nb Jours</th>
+            <th>Catégorie</th>
+            <th>Action</th>
+        </thead>
+        {% for prog in session.contenir %}
+        <tbody>
+            <tr>
+                <td class="bold">
+                    {{ prog.module.intitule}}              
+                </td>
+                <td>
+                    {{ prog.nbJours}}
+                </td>
+                <td>
+                    {{ prog.module.categorie.intitule }}
+                </td>
+                <td><a href="{{ path('remove_one_module_from_session', {'id':session.id, 'id_contenir':prog.module.id}) }}">&xotime;</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    <br>
+    <a class="submit" href="{{ path('ajout_module', {'id':session.id}) }}">Ajouter un module</a>
+</div>
