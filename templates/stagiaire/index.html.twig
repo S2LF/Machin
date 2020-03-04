@@ -45,7 +45,9 @@
             
                 <td>
                     <a class="action" href="{{ path('edit_stagiaire', {'id':stagiaire.id}) }}">&expectation;</a>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a class="action" href="{{ path('remove_one_stagiaire', {'id':stagiaire.id}) }}">&xotime;</a>
+                    {% endif %}
                 </td>
 
                     

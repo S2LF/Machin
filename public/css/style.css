@@ -44,7 +44,13 @@ figure{
     margin: 70px;
 }
 
-
+nav{
+    display: flex;
+    justify-content: space-between;
+}
+nav div a{
+    padding-left: 1em;
+}
 nav a {
     font-size: 1.5em;
 }

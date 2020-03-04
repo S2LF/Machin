@@ -4,7 +4,13 @@
 
 {% block body %}
 
+{% if app.user %}
+    
+
+<h1 class="centrer">BIENVENUE {{ app.user.pseudo }} !</h1>
+{% else %}
 <h1 class="centrer">BIENVENUE !</h1>
+{% endif %}
 
 <figure class="centrer">
 <img src="{{ asset('img/elan.png') }}" alt="Logo Elan">

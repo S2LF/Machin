@@ -10,11 +10,13 @@ use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 /**
  * @Route("/stagiaire")
+ * @IsGranted("ROLE_USER")
  */
 
 
@@ -22,6 +24,7 @@ class StagiaireController extends AbstractController
 {
    /**
      * @Route("/", name="stagiaire_index")
+     * 
      */
     public function index()
     {
@@ -36,6 +39,7 @@ class StagiaireController extends AbstractController
     
     /**
     * @Route("/new", name="form_stagiaire")
+    * @IsGranted("ROLE_ADMIN")
     */
     public function newForm(Request $request){
 
@@ -170,6 +174,7 @@ class StagiaireController extends AbstractController
 
     /**
     * @Route("/delete/{id}", name="remove_one_stagiaire")
+    * @IsGranted("ROLE_ADMIN")
     */
     public function removeOnestagiaire(Stagiaire $stagiaire, EntityManagerInterface $entityManager){
         //On appelle la fonction remove propre à Symfony.

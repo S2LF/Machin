@@ -18,10 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/session")
+ * @IsGranted("ROLE_USER")
  */
 class SessionController extends AbstractController
 {
